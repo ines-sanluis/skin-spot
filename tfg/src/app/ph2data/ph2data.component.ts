@@ -30,13 +30,4 @@ export class Ph2DataComponent implements OnInit {
     else this.dataService.getDataDiagnose(selectedDiagnose).subscribe(datos => this.datos = datos);
   }
 
-  addCoresControls(){
-    const arr = this.cores.map(element => {return this._fb.control(false);});
-    return this._fb.array(arr);
-
-  }
-
-  cambioCor(nome){
-    console.log(nome, cb.white);
-  }
 }

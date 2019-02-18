@@ -1,48 +1,32 @@
-input {
-  text-align: center;
-  background-color: blue;
-  display: inline-block;
-  width: 50%;
-  height: 300px;
-}
-
-label{
-  text-align: center;
-  background-color: green;
-  font-family: Arial, Helvetica, sans-serif;
-  cursor: pointer;
-  display: inline-block;
-  width: 100%;
-}
-
 div{
+  width: 500px;
+  height: 300px;
+  /* background-color: pink; */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+button{
+  margin: auto;
+  padding: 10px;
+  margin-top: 20px;
+  margin-right: 20px;
+  border-style: solid;
+  border-radius: 4px;
   cursor: pointer;
-  background-color: blue;
-  display: inline-block;
-  width: 50%;
-  height: 500px;
 }
-/*
-.inputfile + label {
-    font-size: 1.25em;
-    font-weight: 700;
-    color: white;
-    background-color: black;
-    display: inline-block;
+#botonSelector{
+  background-color: #DEDEDE;
+  border-color: #DEDEDE;
 }
-
-.inputfile:focus + label,
-.inputfile + label:hover {
-    background-color: red;
+#botonCarga{
+  background-color: #4CAF50;
+  color: white;
+  border-color: green;
 }
-.inputfile + label {
-	cursor: pointer; /* "hand" cursor */
-/*
-.inputfile:focus + label {
-	outline: 1px dotted #000;
-	outline: -webkit-focus-ring-color auto 5px;
+p{
+  float: right;
 }
-.inputfile + label * {
-	pointer-events: none;
-}
-*/

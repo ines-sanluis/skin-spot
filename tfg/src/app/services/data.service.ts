@@ -18,4 +18,8 @@ export class DataService {
     return of(DATASET.filter(data => data.diagnosis === diagnose));
   }
 
+  getDataId(id: string):  Observable<Data[]>{
+    return of(DATASET.filter(data => data.id === id));
+  }
+
 }

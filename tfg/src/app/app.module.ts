@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import {ImageZoomModule} from 'angular2-image-zoom';
 
+import {AppRoutingModule} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ResultsComponent } from './results/results.component';
-import {AppRoutingModule} from './app-routing.module';
 import { Ph2DataComponent } from './ph2data/ph2data.component';
 import { UploadComponent } from './upload/upload.component';
 
@@ -18,7 +19,8 @@ import { UploadComponent } from './upload/upload.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ImageZoomModule
   ],
   providers: [],
   bootstrap: [AppComponent]
