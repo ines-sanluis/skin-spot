@@ -1,0 +1,60 @@
+*{
+  font-family: Arial, Helvetica, san-sans-serif;
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 35%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+h2{
+  margin-top: 60px;
+}
+.diagnose p{
+  margin-top: 30px;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 4px;
+  width: 50%;
+}
+
+#atypical{
+  background-color: #FFB90F;
+}
+#common{
+  background-color: #4CAF50;
+}
+#melanoma{
+  background-color: #FF6347;
+}
+
+.notPresent{
+  color: grey;
+  font-weight: 100;
+}
+.present{
+  font-weight: 600;
+}
+button{
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 10px;
+  margin-top: 20px;
+  margin-right: 20px;
+  border-style: solid;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border-color: green;
+}

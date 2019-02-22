@@ -1,0 +1,28 @@
+<h2>Resultado da análise</h2>
+
+<div class="row">
+  <div class="diagnose">
+    <p *ngIf="analise.diagnosis === 'Atypical Nevus'" id="atypical">{{analise.diagnosis}}</p>
+    <p *ngIf="analise.diagnosis === 'Common Nevus'" id="common">{{analise.diagnosis}}</p>
+    <p *ngIf="analise.diagnosis === 'Melanoma'" id="melanoma">{{analise.diagnosis}}</p>
+  </div>
+  <div class="column"><img src="assets/images/IMD002.bmp"width="384" height="280"/></div>
+  <!-- <div class="column"><img src="assets/images/IMD002.bmp" [imageZoom]="assets/images/IMD002.bmp" [lensStyle]="WINDOW" width="384" height="280"/></div> -->
+  <div class="column">
+    <!-- <p *ngIf="arquivo">Nome arquivo: {{arquivo.name}}</p> -->
+    <p class="present" *ngIf="analise.white === 'X'">Branco</p>
+    <p class="present" *ngIf="analise.red === 'X'">Vermello</p>
+    <p class="present" *ngIf="analise.light_brown === 'X'">Marrón claro</p>
+    <p class="present" *ngIf="analise.dark_brown === 'X'">Marrón escuro</p>
+    <p class="present" *ngIf="analise.blue_gray === 'X'">Gris azulado</p>
+    <p class="present" *ngIf="analise.black === 'X'">Negro</p>
+
+    <p class="notPresent" *ngIf="analise.white === ''">Branco </p>
+    <p class="notPresent" *ngIf="analise.red === ''">Vermello</p>
+    <p class="notPresent" *ngIf="analise.light_brown === ''">Marrón claro</p>
+    <p class="notPresent" *ngIf="analise.dark_brown === ''">Marrón escuro</p>
+    <p class="notPresent" *ngIf="analise.blue_gray === ''">Gris azulado</p>
+    <p class="notPresent" *ngIf="analise.black === ''">Negro</p>
+  </div>
+</div>
+<button type="submit" (click)="onExport()">Exportar</button>

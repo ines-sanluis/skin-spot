@@ -1,4 +1,0 @@
-<input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
-<button id="botonSelector" (click)="fileInput.click()">Seleccionar imaxe</button>
-<p *ngIf="selectedFile">{{selectedFile.name}}</p>
-<button id="botonCarga" (click)="onUpload()"  [routerLink]="['/results']" *ngIf="selectedFile">Analizar</button>
