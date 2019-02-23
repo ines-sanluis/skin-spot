@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Data} from '../classes/data';
-import {DataService} from '../services/data.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Subscription} from 'rxjs/Subscription';
+import {Ph2ApiService} from '../services/ph2-api.service';
+import {Analise} from '../classes/analise.model';
 
 @Component({
   selector: 'app-ph2data',
@@ -9,25 +10,52 @@ import {DataService} from '../services/data.service';
 })
 
 export class Ph2DataComponent implements OnInit {
-  datos: Data[];
+  datosLista: Analise[];
+  datosListaSubs: Subscription;
+
   diagnoses: Array<String>  = ["Todas", "Common Nevus", "Atypical Nevus", "Melanoma"];
   cores: Array<String> = ["White", "Red", "Light brown", "Dark brown", "Blue gray", "Black"];
 
-  constructor(private dataService: DataService) { }
+  constructor(private datosApi: Ph2ApiService) { }
 
   ngOnInit() {
-    this.getData();
+    this.datosListaSubs = this.datosApi.getFullDatabase().subscribe((res: Analise[]) => {
+      this.datosLista = res;
+    });
   }
 
-/*Recuperar todos os datos da base de datos*/
-  getData(): void{
-    this.dataService.getAllData().subscribe(datos => this.datos = datos);
+  ngOnDestroy(){
+    this.datosListaSubs.unsubscribe();
   }
 
- /*Filtrar a taboa polo tipo de diagnose*/
-  cambioFiltroDiagnose(selectedDiagnose){
-    if(selectedDiagnose == "All")   this.dataService.getAllData().subscribe(datos => this.datos = datos);
-    else this.dataService.getDataDiagnose(selectedDiagnose).subscribe(datos => this.datos = datos);
-  }
+ // Filtrar a taboa polo tipo de diagnose
+  filtrarDiagnose(diagnose){
+    switch(diagnose){
+      case this.diagnoses[1]: { //Common Nevus
+        this.datosListaSubs = this.datosApi.getCommonNevus().subscribe((res: Analise[]) => {
+          this.datosLista = res;
+        });
+        break;
+      }
+      case this.diagnoses[2]: { //Atypical Nevus
+        this.datosListaSubs = this.datosApi.getAtypicalNevus().subscribe((res: Analise[]) => {
+          this.datosLista = res;
+        });
+        break;
+      }
+      case this.diagnoses[3]: { //Melanoma
+        this.datosListaSubs = this.datosApi.getMelanoma().subscribe((res: Analise[]) => {
+          this.datosLista = res;
+        });
+        break;
+      }
+      default: { //Todas
+        this.datosListaSubs = this.datosApi.getFullDatabase().subscribe((res: Analise[]) => {
+          this.datosLista = res;
+        });
+        break;
+      }
+    } //switch
+  } //filtrarDiagnose
 
 }

@@ -1,7 +1,7 @@
 <h2>PH2 Database</h2>
 <label for="filtroDiagnose">Diagnose</label>
-<select name="filtroDiagnose" (change)="cambioFiltroDiagnose($event.target.value)">
-  <option *ngFor="let diagnose of diagnoses;">{{diagnose}}</option>
+<select name="filtroDiagnose" (change)="filtrarDiagnose($event.target.value)">
+  <option *ngFor="let d of diagnoses;">{{d}}</option>
 </select>
 <!--
 <input type="checkbox" name="cor1" value="White" [(ngModel)]="cbWhite" (change)="cambioCor($event.target.value)"><label for="White">White</label>
@@ -25,9 +25,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let d of datos">
+    <tr *ngFor="let d of datosLista;">
       <th>{{d.id}}</th>
-      <th>{{d.diagnosis}}</th>
+      <th>{{d.clinical_diagnosis}}</th>
       <th>{{d.white}}</th>
       <th>{{d.red}}</th>
       <th>{{d.light_brown}}</th>
