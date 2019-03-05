@@ -19,19 +19,19 @@ export class Ph2ApiService {
   }
 
   getFullDatabase(): Observable<Analise[]>{
-    return this.http.get<Analise[]>("http://localhost:5000/ph2dataset").catch(Ph2ApiService._handleError);
+    return this.http.get<Analise[]>("http://localhost:5000/ph2dataset/todas").catch(Ph2ApiService._handleError);
   }
 
   getCommonNevus(): Observable<Analise[]>{
-    return this.http.get<Analise[]>("http://localhost:5000/common_nevus").catch(Ph2ApiService._handleError);
+    return this.http.get<Analise[]>("http://localhost:5000/ph2dataset/common_nevus").catch(Ph2ApiService._handleError);
   }
 
   getAtypicalNevus(): Observable<Analise[]>{
-    return this.http.get<Analise[]>("http://localhost:5000/atypical_nevus").catch(Ph2ApiService._handleError);
+    return this.http.get<Analise[]>("http://localhost:5000/ph2dataset/atypical_nevus").catch(Ph2ApiService._handleError);
   }
 
   getMelanoma(): Observable<Analise[]>{
-    return this.http.get<Analise[]>("http://localhost:5000/melanoma").catch(Ph2ApiService._handleError);
+    return this.http.get<Analise[]>("http://localhost:5000/ph2dataset/melanoma").catch(Ph2ApiService._handleError);
   }
 
 

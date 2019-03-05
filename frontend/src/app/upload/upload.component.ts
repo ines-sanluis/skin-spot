@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ShowResultsService} from '../services/show-results.service';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+
 
 @Component({
   selector: 'app-upload',
@@ -9,7 +11,7 @@ import {ShowResultsService} from '../services/show-results.service';
 export class UploadComponent implements OnInit {
   selectedFile: File = null;
 
-  constructor(private showResults: ShowResultsService) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -17,16 +19,14 @@ export class UploadComponent implements OnInit {
   /*Obter acceso ao arquivo*/
   onFileChanged(event){
     this.selectedFile = <File>event.target.files[0];
-    console.log(this.selectedFile);
+    // console.log(this.selectedFile);
   }
 
-  /*Codigo upload*/
+  /*Codigo upload para enviar a imaxe ao backend*/
   onUpload(){
-    this.showResults.setFile(this.selectedFile);
-    console.log("FILE LOGGED: "+this.showResults.getFile().name);
-    //this.http seria o HttpClient inxectado
-    /*
-    this.http.post('my-backend.com/file-upload', this.selectedFile).subscribe(...)
-    */
+    console.log(this.selectedFile.name)
+    const fd = new FormData();
+    fd.append('image', this.selectedFile, this.selectedFile.name);
+    this.http.post("http://localhost:5000/file-upload", fd).subscribe(res => {console.log(res);});
   }
 }
