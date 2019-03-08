@@ -1,16 +1,5 @@
 *{
-    font-family: Arial, Helvetica, sans-serif;
-}
-div{
-  width: 500px;
-  height: 300px;
-  /* background-color: pink; */
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  font-family: Arial, Helvetica, sans-serif;
 }
 button{
   top: 0;
@@ -33,10 +22,11 @@ button{
   background-color: #4CAF50;
   color: white;
   border-color: green;
-}
-p{
   float: right;
 }
 h2{
-    margin-top: 60px;
+  margin-top: 60px;
+}
+img{
+  position: fixed;
 }
