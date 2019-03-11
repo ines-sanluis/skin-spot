@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="column">
+    <div class="indent">
+      <h1 id="paso_uno" [className]="paso==1 ? 'actual-step' : 'other-step'" (click)="onCancel()">Paso 1</h1>
+      <h1 id="paso_dos" [className]="paso==2 ? 'actual-step' : 'other-step'">Paso 2</h1>
+      <h2>{{paso_descripcion}}</h2>
+      <div *ngIf="paso == 1">
+        <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+        <button id="botonSelector" (click)="fileInput.click()">Seleccionar imaxe</button>
+        <img *ngIf="message" class="icon-state" src="../assets/images/error.png">
+      </div>
+      <div *ngIf="paso == 2">
+        <button id="botonCancel" (click)="onCancel()">Cancelar</button>
+        <button id="botonCarga" (click)="onUpload()">Analizar</button>
+      </div>
+      <span class="message" style="color:red;" *ngIf="message">{{message}}</span>
+    </div>
+  </div>
+  <div class="column">
+    <div *ngIf="selectedFile" class="image-dermo">
+      <p><b>Nome:</b> {{selectedFile.name}}</p>
+      <!-- <img *ngIf="imgURL" [src]="imgURL" width="384" height="280"/> -->
+      <img *ngIf="imgURL" [src]="imgURL" />
+    </div>
+  </div>
+</div>

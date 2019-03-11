@@ -7,14 +7,14 @@ import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Ph2DataComponent } from './ph2data/ph2data.component';
-import { UploadComponent } from './upload/upload.component';
-import {Ph2ApiService} from './services/ph2-api.service'
+import {Ph2ApiService} from './services/ph2-api.service';
+import { IndexComponent } from './index/index.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     Ph2DataComponent,
-    UploadComponent,
+    IndexComponent,
   ],
   imports: [
     BrowserModule,
