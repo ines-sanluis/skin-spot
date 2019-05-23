@@ -18,9 +18,8 @@
   </div>
   <div class="column">
     <div *ngIf="selectedFile" class="image-dermo">
-      <p><b>Nome:</b> {{selectedFile.name}}</p>
-      <!-- <img *ngIf="imgURL" [src]="imgURL" width="384" height="280"/> -->
-      <img *ngIf="imgURL" [src]="imgURL" />
+      <p *ngIf="selectedFile"><b>Nome:</b> {{selectedFile.name}}</p>
+      <canvas id="lenzo" width="549" height="400"></canvas>
     </div>
   </div>
 </div>

@@ -7,13 +7,11 @@ import cv2
 import sys, os
 import numpy as np
 
-UPLOAD_FOLDER = 'C:\\Users\\Inés\\Documents'
 
 print("Backend Running")
 img = 'NULL'
 file = 'NULL'
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 Base.metadata.create_all(engine)
 
@@ -32,24 +30,36 @@ def getPh2Dataset(diagnose):
     return jsonify(data.data)
 
 @app.route('/file-upload', methods=['POST'])
-def imageUpload():
-    global img
-    global file
-    if 'image' not in request.files:
+def imaxeUpload():
+    global img, file
+    if 'imaxe' not in request.files:
         print('Erro: non hai petición de imaxe')
         return jsonify("Non recibido")
-    file = request.files['image']
+    file = request.files['imaxe']
     if file.filename == '':
         print("Erro: non hai un arquivo seleccionado")
         return jsonify("Non recibido")
-    filestr = request.files['image'].read()
-    img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
+    filestr = request.files['imaxe'].read()
     npimg = np.fromstring(filestr, np.uint8)
+    img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
+
     # file.save(os.path.join(app.config['UPLOAD_FOLDER'], "imaxe_subida.jpg"))
     # cv2.imshow('Imaxe', img) #titulo da imaxe e fonte
     # cv2.waitKey(0) #esperar a que o usuario pulse unha tecla
     # cv2.destroyAllWindows() #pechar a venta
     return jsonify("Recibido")
+
+@app.route('/canvas-roi', methods=['POST'])
+def canvasRoi():
+    file = request.files['puntos']
+    if 'puntos' in request.files:
+        print('ok')
+        puntos = request.files['puntos']
+        print(puntos)
+    else: print('non hai puntos', request.files)
+    # filestr = request.files['imaxe'].read()
+    # npimg = np.fromstring(filestr, np.uint8)
+    # img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
 
 #
 # @app.route('/get-results')
