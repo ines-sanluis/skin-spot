@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-index',
@@ -41,7 +41,6 @@ export class IndexComponent implements OnInit {
       this.imgURL = reader.result;
       var lenzo : any = document.getElementById("lenzo");
       lenzo.addEventListener("mousedown", this.debuxar, false);
-
       var contexto = lenzo.getContext("2d");
       var background = new Image();
       background.src = this.imgURL;
@@ -55,20 +54,15 @@ export class IndexComponent implements OnInit {
   }
     /*Codigo upload para enviar a imaxe ao backend*/
   onUpload(){
-      console.log(this.selectedFile.name)
-      var fd = new FormData();
-      fd.append('imaxe', this.selectedFile, this.selectedFile.name);
-      this.http.post("http://localhost:5000/file-upload", fd).subscribe(res => {console.log(res);});
-
-      fd = new FormData();
-      var myJsonString = JSON.stringify(this.puntos);
-      fd.append('puntos', myJsonString);
-      this.http.post("http://localhost:5000/canvas-roi", fd).subscribe(res => {console.log(res);});
-
-      // console.log(fd.get('imaxe'));
-      // console.log(fd.get('puntos'));
-      //results = this.http.get(...results...)
-    }
+    console.log("Cargando imaxe "+this.selectedFile.name);
+    var fd = new FormData();
+    fd.append('imaxe', this.selectedFile, this.selectedFile.name);
+    this.http.post("http://localhost:5000/file-upload", fd).subscribe(res => {
+      console.log(res);
+      let requestOptions = {headers: new HttpHeaders({'Content-Type':  'application/json'})};
+      this.http.post("http://localhost:5000/canvas-roi", this.puntos, requestOptions).subscribe(res => {console.log(res);});
+    });
+  }
 
   onCancel(){
     this.selectedFile = null;
@@ -85,8 +79,11 @@ export class IndexComponent implements OnInit {
     let x = event.pageX - lenzo.offsetLeft;
     let y = event.pageY - lenzo.offsetTop;
     let punto = [x, y];
+
     contexto.beginPath();
-    contexto.arc(x, y, 5, 0, 2*Math.PI);
+    contexto.arc(x, y, 2, 0, 2*Math.PI);
+    contexto.strokeStyle = "#FFFF00";
+    contexto.fillStyle = "#FFFF00";
     contexto.stroke();
     contexto.fill();
     if (Object.keys(this.puntos).length){
@@ -96,6 +93,8 @@ export class IndexComponent implements OnInit {
         contexto.beginPath();
         contexto.moveTo(x_old, y_old);
         contexto.lineTo(x, y);
+        contexto.strokeStyle = "#FFFF00";
+        contexto.lineWidth = 3;
         contexto.stroke();
       }
       this.puntos.push(punto);

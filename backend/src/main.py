@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 import cv2
 import sys, os
 import numpy as np
+import json
 
 
 print("Backend Running")
@@ -42,40 +43,34 @@ def imaxeUpload():
     filestr = request.files['imaxe'].read()
     npimg = np.fromstring(filestr, np.uint8)
     img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
-
-    # file.save(os.path.join(app.config['UPLOAD_FOLDER'], "imaxe_subida.jpg"))
-    # cv2.imshow('Imaxe', img) #titulo da imaxe e fonte
-    # cv2.waitKey(0) #esperar a que o usuario pulse unha tecla
-    # cv2.destroyAllWindows() #pechar a venta
-    return jsonify("Recibido")
+    return jsonify("Imaxe cargada")
 
 @app.route('/canvas-roi', methods=['POST'])
 def canvasRoi():
-    file = request.files['puntos']
-    if 'puntos' in request.files:
-        print('ok')
-        puntos = request.files['puntos']
-        print(puntos)
-    else: print('non hai puntos', request.files)
-    # filestr = request.files['imaxe'].read()
-    # npimg = np.fromstring(filestr, np.uint8)
-    # img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
+    global img
+    points = request.json
+    print(points)
+    array = np.array([points], dtype='int32')
+    channel_count = img.shape[2]
+    mask = np.zeros(img.shape, dtype=np.uint8)
+    cv2.fillPoly(mask, array, (255,255,255))
+    img = cv2.bitwise_and(img, mask)
+    return jsonify("Rexión de interese cargada")
 
-#
-# @app.route('/get-results')
-# def getResults():
-#     global img
-#     banda_l = 0
-#     banda_a = 0
-#     banda_b = 0
-#     for r in range(0, img.shape[0]):
-#         for c in range(0, img.shape[1]):
-#             if img[r][c][0] == 0 and img[r][c][1] == 0 and img[r][c][2] == 0: continue
-#             lab = cv2.cvtColor(np.uint8([[img[r][c]]]), cv2.COLOR_BGR2LAB)[0][0]
-#             banda_l += lab[0]
-#             banda_a += lab[1]
-#             banda_b += lab[2]
-#     banda_l = banda_l / img.size
-#     banda_a = banda_a / img.size
-#     banda_b = banda_b / img.size
-#     return jsonify({'banda_l': banda_l, 'banda_a' : banda_a, 'banda_b': banda_b})
+@app.route('/get-results')
+def getResults():
+    global img
+    banda_l = 0
+    banda_a = 0
+    banda_b = 0
+    for r in range(0, img.shape[0]):
+        for c in range(0, img.shape[1]):
+            if img[r][c][0] == 0 and img[r][c][1] == 0 and img[r][c][2] == 0: continue
+            lab = cv2.cvtColor(np.uint8([[img[r][c]]]), cv2.COLOR_BGR2LAB)[0][0]
+            banda_l += lab[0]
+            banda_a += lab[1]
+            banda_b += lab[2]
+    banda_l = banda_l / img.size
+    banda_a = banda_a / img.size
+    banda_b = banda_b / img.size
+    return jsonify({'banda_l': banda_l, 'banda_a' : banda_a, 'banda_b': banda_b})
