@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {BackendApiService} from '../services/backend-api.service';
 
 @Component({
   selector: 'app-index',
@@ -14,7 +16,7 @@ export class IndexComponent implements OnInit {
   private paso: number;
   private puntos = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private backend: BackendApiService, private router: Router) {
       this.debuxar = this.debuxar.bind(this);
     }
 
@@ -54,14 +56,9 @@ export class IndexComponent implements OnInit {
   }
     /*Codigo upload para enviar a imaxe ao backend*/
   onUpload(){
-    console.log("Cargando imaxe "+this.selectedFile.name);
-    var fd = new FormData();
-    fd.append('imaxe', this.selectedFile, this.selectedFile.name);
-    this.http.post("http://localhost:5000/file-upload", fd).subscribe(res => {
-      console.log(res);
-      let requestOptions = {headers: new HttpHeaders({'Content-Type':  'application/json'})};
-      this.http.post("http://localhost:5000/canvas-roi", this.puntos, requestOptions).subscribe(res => {console.log(res);});
-    });
+    this.backend.sendFile(this.selectedFile);
+    this.backend.sendPoints(this.puntos);
+    this.router.navigateByUrl('/results');
   }
 
   onCancel(){

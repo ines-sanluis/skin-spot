@@ -11,7 +11,6 @@ import json
 
 print("Backend Running")
 img = 'NULL'
-file = 'NULL'
 app = Flask(__name__)
 CORS(app)
 Base.metadata.create_all(engine)
@@ -32,7 +31,7 @@ def getPh2Dataset(diagnose):
 
 @app.route('/file-upload', methods=['POST'])
 def imaxeUpload():
-    global img, file
+    global img
     if 'imaxe' not in request.files:
         print('Erro: non hai petición de imaxe')
         return jsonify("Non recibido")
@@ -47,7 +46,7 @@ def imaxeUpload():
 
 @app.route('/canvas-roi', methods=['POST'])
 def canvasRoi():
-    global img
+    global img, banda_l, banda_a, banda_b
     points = request.json
     print(points)
     array = np.array([points], dtype='int32')
@@ -55,6 +54,7 @@ def canvasRoi():
     mask = np.zeros(img.shape, dtype=np.uint8)
     cv2.fillPoly(mask, array, (255,255,255))
     img = cv2.bitwise_and(img, mask)
+    cv2.imwrite('../frontend/src/assets/images/mascara.png', img)
     return jsonify("Rexión de interese cargada")
 
 @app.route('/get-results')
@@ -73,4 +73,5 @@ def getResults():
     banda_l = banda_l / img.size
     banda_a = banda_a / img.size
     banda_b = banda_b / img.size
+
     return jsonify({'banda_l': banda_l, 'banda_a' : banda_a, 'banda_b': banda_b})

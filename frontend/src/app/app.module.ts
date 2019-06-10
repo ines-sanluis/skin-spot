@@ -7,14 +7,18 @@ import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Ph2DataComponent } from './ph2data/ph2data.component';
+import { IndexComponent } from './index/index.component';
+import { ResultsComponent } from './results/results.component';
+
 import {Ph2ApiService} from './services/ph2-api.service';
-import { IndexComponent } from './index/index.component'
+import {BackendApiService} from './services/backend-api.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     Ph2DataComponent,
     IndexComponent,
+    ResultsComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,7 +27,7 @@ import { IndexComponent } from './index/index.component'
     ImageZoomModule,
     HttpClientModule
   ],
-  providers: [Ph2ApiService],
+  providers: [Ph2ApiService, BackendApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
