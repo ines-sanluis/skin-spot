@@ -24,6 +24,9 @@
       <th>Negro</th>
     </tr>
   </thead>
+  <p *ngIf="loading">
+    <img src="assets/gifs/loading.gif"/>
+  </p>
   <tbody>
     <tr *ngFor="let d of datosLista;">
       <th>{{d.id}}</th>

@@ -12,6 +12,7 @@ import {Analise} from '../classes/analise.model';
 export class Ph2DataComponent implements OnInit {
   datosLista: Analise[];
   datosListaSubs: Subscription;
+  loading : boolean;
 
   diagnoses: Array<String>  = ["Todas", "Common Nevus", "Atypical Nevus", "Melanoma"];
   cores: Array<String> = ["White", "Red", "Light brown", "Dark brown", "Blue gray", "Black"];
@@ -19,8 +20,10 @@ export class Ph2DataComponent implements OnInit {
   constructor(private datosApi: Ph2ApiService) { }
 
   ngOnInit() {
+    this.loading = false;
     this.datosListaSubs = this.datosApi.getFullDatabase().subscribe((res: Analise[]) => {
       this.datosLista = res;
+      this.loading = false;
     });
   }
 
