@@ -22,6 +22,7 @@ import { AngularFireModule } from 'angularfire2';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 // import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
+import { AnalizarComponent } from './analizar/analizar.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { environment } from '../environments/environment';
     ReportarComponent,
     HeaderComponent,
     FooterComponent,
+    AnalizarComponent,
   ],
   imports: [
     BrowserModule,
