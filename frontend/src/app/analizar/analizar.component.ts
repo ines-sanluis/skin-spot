@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {BackendApiService} from '../services/backend-api.service';
@@ -6,7 +6,7 @@ import {BackendApiService} from '../services/backend-api.service';
 @Component({
   selector: 'app-analizar',
   templateUrl: './analizar.component.html',
-  styleUrls: ['./analizar.component.css']
+  styleUrls: ['./analizar.component.css'],
 })
 
 export class AnalizarComponent implements OnInit {
@@ -14,6 +14,7 @@ export class AnalizarComponent implements OnInit {
   private imgURL: any;
   public message: string = null;
   private paso_descripcion = "Subir imaxe";
+  private detalle = "Escolle a imaxe que queres analizar";
   private paso: number;
   private puntos = [];
 
@@ -23,6 +24,25 @@ export class AnalizarComponent implements OnInit {
 
   ngOnInit() {
     this.paso = 1;
+  }
+
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    let key = event.key;
+    console.log("Tecla "+event.key+" presionada");
+    switch(event.key){
+      case "Enter":
+        if (this.paso == 1){
+          let button = document.getElementById("fileInput");
+          button.click();
+        }else this.onUpload();
+        break;
+      case "c":case"C":
+        if (this.paso == 2) this.onCancel();
+        break;
+      case "i":case"I": this.router.navigateByUrl('/index'); break;
+      case "r":case"R": this.router.navigateByUrl('/reportar'); break;
+    }
   }
 
   /*Obter acceso ao arquivo*/
@@ -52,8 +72,9 @@ export class AnalizarComponent implements OnInit {
       };
     }
     //Cambiar paso
-    this.paso_descripcion = "Analizar imaxe";
+    this.paso_descripcion = "Seleccionar rexión de interese";
     this.paso = 2;
+    this.detalle = "Coa axuda do botón esquerdo, debuxa sobre a imaxe"
   }
     /*Codigo upload para enviar a imaxe ao backend*/
   onUpload(){

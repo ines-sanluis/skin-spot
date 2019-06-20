@@ -1,3 +1,6 @@
+.inicio{
+  padding-top: 70px;
+}
 * {
   box-sizing: border-box;
 }
@@ -77,56 +80,10 @@ footer a{
 
 #equipo-icon{
   width: 230px;
-  /* width: 50px; */
   height: auto;
-  /* margin-right: 580px; */
-  /* margin-top: 0px; */
 }
 
-/************* SOBRE SKIN SPOT ***********************/
-/************* COMO SE EMPREGA ***********************/
-
-/*
-.empregar-txt{
-  float: left;
-  padding-left: 30px;
-}
-
-
-
-.empregar-row{
-  margin-bottom: 20px;
-}
-
-.empregar-row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
- */
-
-/************* FUNCIONAMENTO **************************/
 .ai-resize {
-    width: 200px; /* you can use % */
+    width: 200px;
     height: auto;
-    /* margin-left: 10%; */
 }
-
-
-/*********** O EQUIPO DE DESENVOLVEMENTO ************/
-/*
-.equipo-txt{
-  float: left;
-}
-
-*/
-
-/******************** FOOTER ************************/
-
-
-/********** HIDE ************/
-/*
-img{
-display: none;
-} */

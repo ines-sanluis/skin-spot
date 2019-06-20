@@ -1,38 +1,16 @@
-<h1>Reportar problema</h1>
-<div class="container">
-<form (ngSubmit)="onSubmit()">
-  <!-- <input type="text" placeholder="Nome e apelidos"/> -->
-  <input [(ngModel)]="asunto" type="text" placeholder="Asunto" name="asunto"/>
-  <textarea [(ngModel)]="descripcion" placeholder="Descripción" name="descripcion"></textarea>
-  <button type="submit" id="botonSubmit">Reportar</button>
-  <button type="reset" id="botonCancel">Cancelar</button>
-</form>
+<div class=reportar>
+  <div class="titulo">
+    <h1>Reportar problema</h1>
+    <p>Se observaches calquer problema coa ferramenta, por favor repórtao e o equipo intentará solucionalo</p>
+  </div>
+  <div class="container">
+  <form (ngSubmit)="onSubmit()">
+    <!-- <input type="text" placeholder="Nome e apelidos"/> -->
+    <input [(ngModel)]="asunto" (keypress)="pressAsunto()" type="text" placeholder="Asunto" name="asunto" (focus)="escribir()" (focusout)="escribir()"/>
+    <textarea [(ngModel)]="descripcion" (keypress)="pressDescripcion()" placeholder="Descripción" name="descripcion" (focus)="escribir()" (focusout)="escribir()"></textarea>
+    <button type="submit" id="botonSubmit">Reportar</button>
+    <button type="reset" id="botonCancel">Cancelar</button>
+  </form>
+  </div>
 </div>
-
-<!--
-  <div style="padding-bottom: 18px;">Severidade<br/>
-  <select id="data_3" name="data_3" style="width : 300px;" class="form-control"><option>Critica</option>
-  <option>Maior</option>
-  <option>Moderada</option>
-  <option>Menor</option>
-  <option>Estética</option>
-  </select>
-  </div>
-  <div style="padding-bottom: 18px;">Prioridade<br/>
-  <select id="data_4" name="data_4" style="width : 300px;" class="form-control"><option>Baixa</option>
-  <option>Media</option>
-  <option>Alta</option>
-  </select>
-  </div>
-  <div style="padding-bottom: 18px;">Reproducibilidade<br/>
-  <select id="data_5" name="data_5" style="width : 300px;" class="form-control"><option>10%</option>
-  <option>25%</option>
-  <option>50%</option>
-  <option>75%</option>
-  <option>100%</option>
-  </select>
-  </div>
-  <input type="text" placeholder="Asunto"/>
-  <div style="padding-bottom: 18px;"><input name="skip_Submit" value="Submit" type="submit"/></div>
-  <div>
-  </div> -->
+<app-footer></app-footer>

@@ -2,24 +2,49 @@
   font-family: Arial, Helvetica, san-sans-serif;
   box-sizing: border-box;
 }
-
-h2{
-  padding-top: 40px;
+.resultados{
+  min-width: 1000px;
+  padding-top: 70px;
 }
-/* Create two equal columns that floats next to each other */
-.column {
+.titulo{
+  text-align: center;
+  padding-top: 100px;
+  padding-bottom: 50px;
+}
+.left{
   float: left;
   width: 50%;
-  height: 300px; /* Should be removed. Only for demonstration */
 }
-
+.right{
+  float: right;
+  width: 50%;
+}
+#imaxe{
+  margin-right: 100px;
+  margin-bottom: 100px;
+  border-radius: 5px;
+}
+#loading{
+  text-align: center;
+}
+#txt-loading{
+  text-align: center;
+  margin-top: 140px;
+}
+.diagnose{
+  margin-left: 100px;
+  margin-right: 100px;
+}
 .diagnose p{
   color: white;
-  padding: 10px;
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
   text-decoration: none;
   font-weight: bold;
   text-align: center;
   border-radius: 4px;
+  margin-top: 50px;
 }
 
 #atypical{
@@ -33,12 +58,73 @@ h2{
 #melanoma{
   background-color: #FF6347;
 }
-
-.notPresent{
-  color: grey;
-  font-weight: 100;
+button {
+  cursor: pointer;
+  border-style: solid;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border-color: green;
+}
+.erro{
+  color: red;
+  margin-left: 100px;
+  margin-right: 100px;
+  padding-bottom: 50px;
+  text-align: justify;
+}
+.centrar{
+  text-align: center;
+}
+.bandas{
+  margin-top: 50px;
+  padding-top: 0px;
+  margin-left: 100px;
+}
+#mensaxe-erro{
+  text-align: center;
+  /* align-items: center; */
 }
 
-.present{
-  font-weight: 600;
+.row-banda {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#exportar{
+  padding-top: 50px;
+}
+.column-banda {
+  display: flex;
+  flex-direction: column;
+  /* flex-basis: 100%; */
+  /* flex: 1; */
+}
+
+.lbl-banda{
+    color: white;
+    background-color: #4CAF50;;
+    padding: 5px 20px 5px 20px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+.banda{
+  padding: 5px 20px 5px 20px;
+}
+footer{
+    background-color: #4CAF50;
+    padding: 20px;
+    position: fixed;
+    bottom: -200px;
+    width: 100%;
+    height: 60px;   /* Height of the footer */
+  /* position: fixed; */
+  /* margin-top: 200px; */
+  /* left: 0; */
+  /* bottom: 0; */
+  /* width: 100%; */
 }

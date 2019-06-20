@@ -1,11 +1,18 @@
+<div class="analizar">
+<div class="titulo">
+  <h1>Analizar imaxe</h1>
+  <p>Sube unha imaxe, selecciona a rexión de interese e obtén a diagnose</p>
+</div>
 <div class="row">
   <div class="column">
     <div class="indent">
-      <h1 id="paso_uno" [className]="paso==1 ? 'actual-step' : 'other-step'" (click)="onCancel()">Paso 1</h1>
-      <h1 id="paso_dos" [className]="paso==2 ? 'actual-step' : 'other-step'">Paso 2</h1>
+      <h1 class="actual-step">Paso {{paso}}</h1>
+      <!-- <h1 id="paso_uno" [className]="paso==1 ? 'actual-step' : 'other-step'" (click)="onCancel()">Paso 1</h1> -->
+      <!-- <h1 id="paso_dos" [className]="paso==2 ? 'actual-step' : 'other-step'">Paso 2</h1> -->
       <h2>{{paso_descripcion}}</h2>
+      <p id="detalle">{{detalle}}</p>
       <div *ngIf="paso == 1">
-        <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+        <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput id="fileInput">
         <button id="botonSelector" (click)="fileInput.click()">Seleccionar imaxe</button>
         <img *ngIf="message" class="icon-state" src="../assets/images/error.png">
       </div>
@@ -23,3 +30,5 @@
     </div>
   </div>
 </div>
+</div>
+<!-- <app-footer></app-footer> -->

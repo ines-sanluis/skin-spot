@@ -7,13 +7,15 @@ import cv2
 import sys, os
 import numpy as np
 import json
-
+from sklearn.svm import SVC
+from sklearn.externals import joblib
 
 print("Backend Running")
 img = 'NULL'
 app = Flask(__name__)
 CORS(app)
 Base.metadata.create_all(engine)
+modelo = joblib.load("svm/svm-modelo.pkl")
 
 @app.route('/ph2dataset/<diagnose>')
 def getPh2Dataset(diagnose):
@@ -31,6 +33,7 @@ def getPh2Dataset(diagnose):
 
 @app.route('/file-upload', methods=['POST'])
 def imaxeUpload():
+    os.remove("../frontend/src/assets/images/mascara.png")
     global img
     if 'imaxe' not in request.files:
         print('Erro: non hai petición de imaxe')
@@ -73,5 +76,12 @@ def getResults():
     banda_l = banda_l / img.size
     banda_a = banda_a / img.size
     banda_b = banda_b / img.size
-
-    return jsonify({'banda_l': banda_l, 'banda_a' : banda_a, 'banda_b': banda_b})
+    prediccion =  modelo.predict([[banda_l, banda_a, banda_b]])[0]
+    if prediccion == 0:
+        prediccion = "Common Nevus"
+    elif prediccion == 1:
+        prediccion = "Atypical Nevus"
+    else:
+        prediccion = "Melanoma"
+    print("Prediccion: ", prediccion)
+    return jsonify({'banda_l': banda_l, 'banda_a' : banda_a, 'banda_b': banda_b, 'prediccion': prediccion})

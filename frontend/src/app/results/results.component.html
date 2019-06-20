@@ -1,38 +1,43 @@
-<h2>Resultado da análise</h2>
-
-
-<div class="row">
-  <div class="column"><img [src]=imgURL width="765" height="574"/></div>
-  <div class="column">
-    <!-- <p *ngIf="arquivo">Nome arquivo: {{arquivo.name}}</p> -->
-    <div class="diagnose">
-    <p *ngIf="analise.clinical_diagnosis === 'Atypical Nevus'" id="atypical">{{analise.clinical_diagnosis}}</p>
-    <p *ngIf="analise.clinical_diagnosis === 'Common Nevus'" id="common">{{analise.clinical_diagnosis}}</p>
-    <p *ngIf="analise.clinical_diagnosis === 'Melanoma'" id="melanoma">{{analise.clinical_diagnosis}}</p>
-    </div>
-  <p *ngIf="loading">
-    <img src="assets/gifs/loading.gif"/>
-  </p>
-  <p *ngIf="!loading">Banda L: {{banda_l | json}}</p>
-  <p *ngIf="!loading">Banda A: {{banda_a | json}}</p>
-  <p *ngIf="!loading">Banda B: {{banda_b | json}}</p>
-
-    <!--
-    <p class="present" *ngIf="analise.white === 'X'">Branco</p>
-    <p class="present" *ngIf="analise.red === 'X'">Vermello</p>
-    <p class="present" *ngIf="analise.light_brown === 'X'">Marrón claro</p>
-    <p class="present" *ngIf="analise.dark_brown === 'X'">Marrón escuro</p>
-    <p class="present" *ngIf="analise.blue_gray === 'X'">Gris azulado</p>
-    <p class="present" *ngIf="analise.black === 'X'">Negro</p>
-
-    <p class="notPresent" *ngIf="analise.white === ''">Branco </p>
-    <p class="notPresent" *ngIf="analise.red === ''">Vermello</p>
-    <p class="notPresent" *ngIf="analise.light_brown === ''">Marrón claro</p>
-    <p class="notPresent" *ngIf="analise.dark_brown === ''">Marrón escuro</p>
-    <p class="notPresent" *ngIf="analise.blue_gray === ''">Gris azulado</p>
-    <p class="notPresent" *ngIf="analise.black === ''">Negro</p> -->
+<div class="resultados">
+  <div class="titulo">
+    <h1>Resultado da análise</h1>
+    <p *ngIf="loading; else listos">Estamos analizando a imaxe para poder ofrecerche unha diagnose</p>
+    <ng-template #listos><p>A imaxe que seleccionaches foi analizada, a diagnose predita por SkinSpot é a seguinte</p></ng-template>
   </div>
 
-</div>
-
-<!-- <img src="assets/images/IMD002.bmp" [imageZoom]="assets/images/IMD002.bmp" [lensWidth]="10"  width="384" height="280"/> -->
+  <div class="right">
+    <p><b>Rexión de interese</b></p><img id="imaxe" [src]=imgURL width="765" height="574"/>
+  </div>
+  <div class="left">
+    <div class="diagnose"  *ngIf="!loading && !erros">
+        <p *ngIf="prediccion === 'Atypical Nevus'" id="atypical">Nevus atípico</p>
+        <p *ngIf="prediccion === 'Common Nevus'" id="common">Nevus común</p>
+        <p *ngIf="prediccion === 'Melanoma'" id="melanoma">Melanoma</p>
+    </div>
+    <div class="bandas" *ngIf="!loading && !erros">
+        <p><b>Características de cor en formato LAB</b></p>
+        <div class='row-banda'>
+          <div class='column-banda'><div class='lbl-banda'><p>Banda L</p></div></div>
+          <div class='column-banda'><div class='banda'><p>{{banda_l | json}}</p></div></div>
+        </div>
+        <div class='row-banda'>
+          <div class='column-banda'><div class='lbl-banda'><p>Banda A</p></div></div>
+          <div class='column-banda'><div class='banda'><p>{{banda_a | json}}</p></div></div>
+        </div>
+        <div class='row-banda'>
+          <div class='column-banda'><div class='lbl-banda'><p>Banda B</p></div></div>
+          <div class='column-banda'><div class='banda'><p>{{banda_b | json}}</p></div></div>
+        </div>
+        <div id="exportar" class="centrar" *ngIf="!loading && !erros"><button (click)="onExport()">Exportar</button></div>
+    </div>
+  </div>
+  <div class="right">
+    <p id="txt-loading"*ngIf="loading">Analizando a imaxe</p>
+    <p id="loading"><img  *ngIf="loading" src="assets/gifs/loading.gif"/></p>
+    <p *ngIf="erros" style="margin-left: 100px;"> Vaites! Sucedeu un erro que non permitiu obter os resultados</p>
+    <div id="mensaxe-erro" *ngIf="erros">
+      <p class="erro">{{erro | json}}</p>
+      <button class="centrar" (click)="onReintentar()">Reintentar</button>
+    </div>
+  </div>
+  <app-footer></app-footer>

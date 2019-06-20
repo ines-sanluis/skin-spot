@@ -1,9 +1,17 @@
-h1{
-  padding: 40px;
+.titulo{
+  text-align: center;
+  padding-top: 100px;
+  padding-bottom: 50px;
 }
 .container {
   text-align: center;
 }
+.reportar{
+  min-width: 600px;
+  padding-top: 70px;
+  padding-bottom: 60px;
+}
+
 form {
   display: inline-block;
 }
@@ -48,4 +56,14 @@ button {
   float: left;
   background-color: #CD5C5C;
   border-color: red;
+}
+footer{
+  background-color: #4CAF50;
+  /* padding: 20px; */
+  position: fixed;
+  color: white;
+  /* margin-top: 200px; */
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
