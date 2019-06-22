@@ -65,6 +65,11 @@ export class AnalizarComponent implements OnInit {
   }
     /*Codigo upload para enviar a imaxe ao backend*/
   onUpload(){
+    console.log(this.puntos.length);
+    if(this.puntos.length < 3 ){
+      this.message = "Para poder analizar a imaxe é necesario seleccionar a rexión de interese. Debuxa un mínimo de tres puntos";
+      return;
+    }
     console.log("Cargando imaxe "+this.selectedFile.name+"...");
     var fd = new FormData();
     fd.append('imaxe', this.selectedFile, this.selectedFile.name);
