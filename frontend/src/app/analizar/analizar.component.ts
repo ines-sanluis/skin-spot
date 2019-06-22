@@ -82,6 +82,9 @@ export class AnalizarComponent implements OnInit {
             console.log(res);
             this.router.navigateByUrl('/results');
           });
+      },
+      error => {
+        this.message = "Vaites! Sucedeu un erro que non permitiu realizar a análise"
       });
   }
 
