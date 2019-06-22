@@ -1,40 +1,24 @@
-from .entidades.entidade import Session, engine, Base
-from .entidades.analise import Analise, AnaliseSchema
 from flask_cors import CORS
 from flask import Flask, jsonify, request, send_file
 from werkzeug.utils import secure_filename
-import cv2
-import sys, os
+import cv2, sys, os, json
 import numpy as np
-import json
 from sklearn.svm import SVC
 from sklearn.externals import joblib
+global img
 
-print("Backend Running")
-img = 'NULL'
 app = Flask(__name__)
 CORS(app)
-Base.metadata.create_all(engine)
 modelo = joblib.load("svm/svm-modelo.pkl")
-
-@app.route('/ph2dataset/<diagnose>')
-def getPh2Dataset(diagnose):
-    session = Session()
-    if diagnose == "todas": data_objects = session.query(Analise).all()
-    else:
-        if diagnose == "common_nevus": d = "Common Nevus"
-        elif diagnose == "atypical_nevus": d = "Atypical Nevus"
-        elif diagnose == "melanoma": d = "Melanoma"
-        data_objects = session.query(Analise).filter(Analise.clinical_diagnosis == d)
-    schema = AnaliseSchema(many=True)
-    data = schema.dump(data_objects)
-    session.close()
-    return jsonify(data.data)
+print("Backend Running")
+img = None
+# img = "../frontend/src/assets/images/lunar.png"
 
 @app.route('/file-upload', methods=['POST'])
 def imaxeUpload():
-    os.remove("../frontend/src/assets/images/mascara.png")
     global img
+    filePath = "../frontend/src/assets/images/mascara.png"
+    if os.path.exists(filePath): os.remove(filePath)
     if 'imaxe' not in request.files:
         print('Erro: non hai petición de imaxe')
         return jsonify("Non recibido")
@@ -45,20 +29,22 @@ def imaxeUpload():
     filestr = request.files['imaxe'].read()
     npimg = np.fromstring(filestr, np.uint8)
     img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
+    # print("File upload: ", img)
+    print("Imaxe enteira subida")
     return jsonify("Imaxe cargada")
 
 @app.route('/canvas-roi', methods=['POST'])
 def canvasRoi():
     global img, banda_l, banda_a, banda_b
     points = request.json
-    print(points)
     array = np.array([points], dtype='int32')
     channel_count = img.shape[2]
     mask = np.zeros(img.shape, dtype=np.uint8)
     cv2.fillPoly(mask, array, (255,255,255))
     img = cv2.bitwise_and(img, mask)
     cv2.imwrite('../frontend/src/assets/images/mascara.png', img)
-    return jsonify("Rexión de interese cargada")
+    print("Imaxe con mascara lista")
+    return jsonify("Rexión de interese calculada")
 
 @app.route('/get-results')
 def getResults():
@@ -77,11 +63,8 @@ def getResults():
     banda_a = banda_a / img.size
     banda_b = banda_b / img.size
     prediccion =  modelo.predict([[banda_l, banda_a, banda_b]])[0]
-    if prediccion == 0:
-        prediccion = "Common Nevus"
-    elif prediccion == 1:
-        prediccion = "Atypical Nevus"
-    else:
-        prediccion = "Melanoma"
+    if prediccion == 0:   prediccion = "Nevus común"
+    elif prediccion == 1: prediccion = "Nevus atípico"
+    else: prediccion = "Melanoma"
     print("Prediccion: ", prediccion)
     return jsonify({'banda_l': banda_l, 'banda_a' : banda_a, 'banda_b': banda_b, 'prediccion': prediccion})

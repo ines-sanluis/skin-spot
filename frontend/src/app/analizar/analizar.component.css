@@ -58,6 +58,12 @@ button {
   border-color: green;
   margin-left: 10px;
 }
+#botonBorrar{
+  background-color: #FFB90F;
+  color: white;
+  border-color: orange;
+  margin-left: 10px;
+}
 #botonCancel{
   background-color: #CD5C5C;
   color: white;

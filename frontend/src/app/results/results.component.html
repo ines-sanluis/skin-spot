@@ -4,20 +4,21 @@
     <p *ngIf="loading; else listos">Estamos analizando a imaxe para poder ofrecerche unha diagnose</p>
     <ng-template #listos><p>A imaxe que seleccionaches foi analizada, a diagnose predita por SkinSpot é a seguinte</p></ng-template>
   </div>
-
+<div class="contenido">
   <div class="right">
-    <p><b>Rexión de interese</b></p><img id="imaxe" [src]=imgURL width="765" height="574"/>
+    <img id="imaxe" [src]=imgURL width="765" height="574"/>
   </div>
   <div class="left">
     <div class="diagnose"  *ngIf="!loading && !erros">
-        <p *ngIf="prediccion === 'Atypical Nevus'" id="atypical">Nevus atípico</p>
-        <p *ngIf="prediccion === 'Common Nevus'" id="common">Nevus común</p>
-        <p *ngIf="prediccion === 'Melanoma'" id="melanoma">Melanoma</p>
+        <p *ngIf="prediccion === 'Nevus atípico'" id="atypical">{{prediccion}}</p>
+        <p *ngIf="prediccion === 'Nevus común'" id="common">{{prediccion}}</p>
+        <p *ngIf="prediccion === 'Melanoma'" id="melanoma">{{prediccion}}</p>
     </div>
+    <div id="exportar" class="centrar" *ngIf="!loading && !erros"><button (click)="onExport()">Exportar resultado</button></div>
     <div class="bandas" *ngIf="!loading && !erros">
-        <p><b>Características de cor en formato LAB</b></p>
+        <p style="text-align: left;"><b>Características de cor en formato LAB</b></p>
         <div class='row-banda'>
-          <div class='column-banda'><div class='lbl-banda'><p>Banda L</p></div></div>
+          <div class='column-banda'><div class='lbl-banda' ><p>Banda L</p></div></div>
           <div class='column-banda'><div class='banda'><p>{{banda_l | json}}</p></div></div>
         </div>
         <div class='row-banda'>
@@ -28,7 +29,15 @@
           <div class='column-banda'><div class='lbl-banda'><p>Banda B</p></div></div>
           <div class='column-banda'><div class='banda'><p>{{banda_b | json}}</p></div></div>
         </div>
-        <div id="exportar" class="centrar" *ngIf="!loading && !erros"><button (click)="onExport()">Exportar</button></div>
+        <div class="selector" style="text-align: left;">
+          <p><b>Cambiar diagnose</b></p>
+          <select (change)="onChange($event.target.value)">
+            <option>Non procede</option>
+            <option *ngIf="prediccion != 'Nevus atípico'">Nevus atípico</option>
+            <option *ngIf="prediccion != 'Nevus común'">Nevus común</option>
+            <option *ngIf="prediccion != 'Melanoma'">Melanoma</option>
+          </select>
+        </div>
     </div>
   </div>
   <div class="right">
@@ -39,5 +48,6 @@
       <p class="erro">{{erro | json}}</p>
       <button class="centrar" (click)="onReintentar()">Reintentar</button>
     </div>
+  </div>
   </div>
   <app-footer></app-footer>

@@ -18,6 +18,7 @@
       </div>
       <div *ngIf="paso == 2">
         <button id="botonCancel" (click)="onCancel()">Cancelar</button>
+        <button id="botonBorrar" (click)="onBorrar()">Borrar</button>
         <button id="botonCarga" (click)="onUpload()">Analizar</button>
       </div>
       <span class="message" style="color:red;" *ngIf="message">{{message}}</span>

@@ -1,7 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {BackendApiService} from '../services/backend-api.service';
 
 @Component({
   selector: 'app-analizar',
@@ -18,7 +17,7 @@ export class AnalizarComponent implements OnInit {
   private paso: number;
   private puntos = [];
 
-  constructor(private backend: BackendApiService, private router: Router) {
+  constructor(private http: HttpClient, private router: Router) {
       this.debuxar = this.debuxar.bind(this);
     }
 
@@ -35,13 +34,14 @@ export class AnalizarComponent implements OnInit {
         if (this.paso == 1){
           let button = document.getElementById("fileInput");
           button.click();
-        }else this.onUpload();
+        }else if(this.paso == 2) this.onUpload();
         break;
       case "c":case"C":
         if (this.paso == 2) this.onCancel();
         break;
       case "i":case"I": this.router.navigateByUrl('/index'); break;
       case "r":case"R": this.router.navigateByUrl('/reportar'); break;
+      case "b":case"B": this.onBorrar();
     }
   }
 
@@ -57,20 +57,7 @@ export class AnalizarComponent implements OnInit {
       return;
     }
     this.selectedFile = <File> event.target.files[0];
-    //Obter url
-    var reader = new FileReader();
-    reader.readAsDataURL(this.selectedFile);
-    reader.onload = (_event) => {
-      this.imgURL = reader.result;
-      var lenzo : any = document.getElementById("lenzo");
-      lenzo.addEventListener("mousedown", this.debuxar, false);
-      var contexto = lenzo.getContext("2d");
-      var background = new Image();
-      background.src = this.imgURL;
-      background.onload = function () {
-        contexto.drawImage(background,0,0, lenzo.width, lenzo.height);
-      };
-    }
+    this.cargarImaxeCanvas();
     //Cambiar paso
     this.paso_descripcion = "Seleccionar rexión de interese";
     this.paso = 2;
@@ -78,9 +65,19 @@ export class AnalizarComponent implements OnInit {
   }
     /*Codigo upload para enviar a imaxe ao backend*/
   onUpload(){
-    this.backend.sendFile(this.selectedFile);
-    this.backend.sendPoints(this.puntos);
-    this.router.navigateByUrl('/results');
+    console.log("Cargando imaxe "+this.selectedFile.name+"...");
+    var fd = new FormData();
+    fd.append('imaxe', this.selectedFile, this.selectedFile.name);
+    this.http.post("http://localhost:5000/file-upload", fd).subscribe(
+      res => {
+        console.log(res);
+        let requestOptions = {headers: new HttpHeaders({'Content-Type':  'application/json'})};
+        this.http.post("http://localhost:5000/canvas-roi", this.puntos, requestOptions).subscribe(
+          res => {
+            console.log(res);
+            this.router.navigateByUrl('/results');
+          });
+      });
   }
 
   onCancel(){
@@ -89,6 +86,27 @@ export class AnalizarComponent implements OnInit {
     this.paso_descripcion = "Subir imaxe";
     this.paso = 1;
     this.puntos = [];
+  }
+
+  onBorrar(){
+    this.puntos = [];
+    this.cargarImaxeCanvas();
+  }
+
+  cargarImaxeCanvas(){
+    var reader = new FileReader();
+    reader.readAsDataURL(this.selectedFile);
+    reader.onload = (_event) => {
+      var lenzo : any = document.getElementById("lenzo");
+      var contexto = lenzo.getContext("2d");
+      this.imgURL = reader.result;
+      lenzo.addEventListener("mousedown", this.debuxar, false);
+      var background = new Image();
+      background.src = this.imgURL;
+      background.onload = function () {
+        contexto.drawImage(background,0,0, lenzo.width, lenzo.height);
+      };
+    }
   }
 
   debuxar(event){

@@ -1,5 +1,4 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import {BackendApiService} from '../services/backend-api.service';
 import {Analise} from '../classes/analise.model';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { saveAs } from 'file-saver';
@@ -20,6 +19,8 @@ export class ResultsComponent implements OnInit {
    private loading : boolean = true;
    private erros : boolean = false;
    private erro : any = null;
+   private modificado : boolean = false;
+   private diagnose_persoal : string = null;
    constructor(private http : HttpClient, private router: Router) { }
    ngOnInit() {
      this.http.get("http://localhost:5000/get-results").subscribe(res => {
@@ -51,9 +52,15 @@ export class ResultsComponent implements OnInit {
           case "r":case"R": this.router.navigateByUrl('/reportar'); break;
        }
      }
+
    onExport(){
      var FileSaver = require('file-saver');
-     let string = "Diagnose predita: "+this.prediccion+"\nBanda L: "+this.banda_l+"\nBanda A: "+this.banda_a+"\nBanda B: "+this.banda_b;
+     let string = "Erro";
+     if(!this.modificado){
+       string = "Diagnose predita: "+this.prediccion+"\nBanda L: "+this.banda_l+"\nBanda A: "+this.banda_a+"\nBanda B: "+this.banda_b;
+     }else{
+       string = "Diagnose predita: "+this.prediccion+"\nOpinion persoal: "+this.diagnose_persoal+"\nBanda L: "+this.banda_l+"\nBanda A: "+this.banda_a+"\nBanda B: "+this.banda_b;
+     }
      var blob = new Blob([string], {type: "text/plain;charset=utf-8"});
      FileSaver.saveAs(blob, "resultado.txt");
   }
@@ -72,5 +79,12 @@ export class ResultsComponent implements OnInit {
          this.erros = true;
          this.erro = error;
        });
+  }
+
+  onChange(deviceValue) {
+      if(deviceValue == "Non procede") this.modificado = false;
+      else this.modificado = true;
+      this.diagnose_persoal = deviceValue;
+      console.log(deviceValue);
   }
 }
