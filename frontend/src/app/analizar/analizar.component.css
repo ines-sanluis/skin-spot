@@ -1,0 +1,100 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.analizar{
+  min-width: 1500px;
+  padding-top: 70px;
+}
+.titulo{
+  text-align: center;
+  padding-top: 100px;
+  padding-bottom: 25px;
+}
+.indent{
+  margin-left: 100px;
+}
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+#detalle{
+  padding-bottom: 40px;
+}
+
+.image-dermo{
+  margin-top: 30px;
+}
+button {
+  margin-right: 5px;
+  cursor: pointer;
+  border-style: solid;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+}
+.message{
+  display: block;
+  margin-top: 20px;
+}
+#botonSelector{
+  background-color: #DEDEDE;
+  border-color: #DEDEDE;
+}
+#botonCarga{
+  background-color: #4CAF50;
+  color: white;
+  border-color: green;
+  margin-left: 10px;
+}
+#botonBorrar{
+  background-color: #FFB90F;
+  color: white;
+  border-color: orange;
+  margin-left: 10px;
+}
+#botonCancel{
+  background-color: #CD5C5C;
+  color: white;
+  border-color: red;
+}
+.actual-step{
+  border-bottom: 5px solid #000;
+  padding-bottom: 6px;
+  border-color: #4CAF50;
+  display: inline-block;
+}
+.other-step{
+  color: grey;
+  padding-bottom: 6px;
+  display: inline-block;
+}
+#paso_uno{
+  cursor: pointer;
+}
+#paso_dos{
+  margin-left: 120px;
+}
+.icon-state{
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  top: 12px;
+  left: 20px;
+}
+#lenzo {
+  border: solid 1px black;
+  margin-bottom: 100px;
+}

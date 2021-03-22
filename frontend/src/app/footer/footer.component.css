@@ -1,0 +1,29 @@
+footer{
+  background-color: #4CAF50;
+  /* padding: 20px; */
+  position: fixed;
+  color: white;
+  /* margin-top: 200px; */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+}
+.container {
+    width: 35px;
+    height: 35px;
+    float: left;
+    cursor: pointer;
+}
+.container img {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.nome{
+  /* margin-bottom: 5px; */
+  margin-left: 60px;
+}

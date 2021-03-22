@@ -1,0 +1,16 @@
+<div class=reportar>
+  <div class="titulo">
+    <h1>Reportar problema</h1>
+    <p>Se observaches calquer problema coa ferramenta, por favor repórtao e o equipo intentará solucionalo</p>
+  </div>
+  <div class="container">
+  <form (ngSubmit)="onSubmit()">
+    <!-- <input type="text" placeholder="Nome e apelidos"/> -->
+    <input [(ngModel)]="asunto" (keypress)="pressAsunto()" type="text" placeholder="Asunto" name="asunto" (focus)="escribir()" (focusout)="escribir()"/>
+    <textarea [(ngModel)]="descripcion" (keypress)="pressDescripcion()" placeholder="Descripción" name="descripcion" (focus)="escribir()" (focusout)="escribir()"></textarea>
+    <button type="submit" id="botonSubmit">Reportar</button>
+    <button type="reset" id="botonCancel">Cancelar</button>
+  </form>
+  </div>
+</div>
+<app-footer></app-footer>

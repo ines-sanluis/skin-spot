@@ -1,0 +1,69 @@
+.titulo{
+  text-align: center;
+  padding-top: 100px;
+  padding-bottom: 50px;
+}
+.container {
+  text-align: center;
+}
+.reportar{
+  min-width: 600px;
+  padding-top: 70px;
+  padding-bottom: 60px;
+}
+
+form {
+  display: inline-block;
+}
+input[type="text"], textarea, select{
+  padding: 8px;
+  display: block;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  border: 1px solid #ccc!important;
+  font-size: 14pt;
+  margin-bottom: 20px;
+}
+
+input[type="text"]{
+  width: 500px;
+}
+
+textarea{
+  font-family: Arial, Helvetica, sans-serif;
+  height: 11em;
+  width: 500px;
+}
+button {
+  cursor: pointer;
+  border-style: solid;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  color: white;
+
+}
+
+#botonSubmit{
+  margin-right: 0px;
+  float: right;
+  border-color: green;
+  background-color: #4CAF50;
+}
+
+#botonCancel{
+  margin-left: 0px;
+  float: left;
+  background-color: #CD5C5C;
+  border-color: red;
+}
+footer{
+  background-color: #4CAF50;
+  /* padding: 20px; */
+  position: fixed;
+  color: white;
+  /* margin-top: 200px; */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}

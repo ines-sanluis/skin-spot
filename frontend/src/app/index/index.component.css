@@ -1,0 +1,89 @@
+.inicio{
+  padding-top: 70px;
+}
+* {
+  box-sizing: border-box;
+}
+#par{
+  color: black;
+  background-color: #EAE6E5;
+}
+#impar{
+  color: black;
+  background-color: white;
+}
+.contenedor, .contenedor-2{
+  margin: auto;
+  padding-top: 20px;
+}
+.contenedor-2{
+  max-width: 620px;
+}
+.contenedor{
+  max-width: 750px;
+}
+.contenedor:after, .contenedor-2:after{
+  content: "";
+  display: table;
+  clear: both;
+}
+#como-funciona{
+  max-width: 500px;
+}
+#equipo{
+  max-width: 500px;
+  padding-left: 20px;
+}
+.centrar{
+  text-align: center;
+}
+.seccion{
+  padding: 100px 50px 100px 50px;
+  min-width: 900px;
+}
+.justificar{
+  text-align: justify;
+}
+.link{
+  margin-top: 20px;
+  padding: 10px 20px 10px 20px;
+  display: inline-block;
+  background: #4CAF50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+#equipo-links a{
+  margin-right: 10px;
+}
+footer{
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px;
+}
+footer a{
+  color: white;
+  text-decoration: none;
+}
+.left{
+  float: left;
+}
+.right{
+  float: right;
+}
+.paso{
+  width: 40px;
+  margin-top: 30px;
+  padding-bottom: 10px;
+  display: grid;
+}
+
+#equipo-icon{
+  width: 230px;
+  height: auto;
+}
+
+.ai-resize {
+    width: 200px;
+    height: auto;
+}
